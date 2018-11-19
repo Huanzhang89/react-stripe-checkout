@@ -54,6 +54,10 @@ export default class ReactStripeCheckout extends React.Component {
     // connection is offline when attemting to load the script.
     onScriptError: PropTypes.func,
 
+    // Array of validation errors.
+    // Prevents stripe dialog from opening if any error are present.
+    validationErrors: PropTypes.array,
+
     // Runs when the script tag is created, but before it is added to the DOM
     onScriptTagCreated: PropTypes.func,
 
@@ -350,6 +354,9 @@ export default class ReactStripeCheckout extends React.Component {
 
   onClick = () => { // eslint-disable-line react/sort-comp
     if (this.props.disabled) {
+      return;
+    }
+    if (this.props.validationErrors && this.props.validationErrors.length > 0) {
       return;
     }
 
